@@ -2,7 +2,6 @@
 import random
 import time
 import curses
-import tcod
 
 from curses import wrapper
 
@@ -11,8 +10,6 @@ stdscr = curses.initscr()
 curses.noecho()
 curses.cbreak()
 stdscr.keypad(True)
-
-# TODO: TCOD initialization
 
 def main(stdscr):
     drawbox()
