@@ -36,8 +36,8 @@ def demo():
     def drawmenu():
         exit = False
         drawbox()
-        stdscr.addstr(5, 5, "OPTION 1", curses.A_STANDOUT)
-        stdscr.addstr(5, 15, "OPTION 2")
+        stdscr.addstr(6, 5, "OPTION 1", curses.A_STANDOUT)
+        stdscr.addstr(6, 15, "OPTION 2")
         selection = 1
         while exit == False:
             stdscr.addstr(3, 5, "Here's a small menu mockup. Use the left and right arrow keys to move, and use the down key to select an option.", curses.A_BOLD)
@@ -45,15 +45,15 @@ def demo():
 
             key = stdscr.getkey()
             if key == "KEY_LEFT":
-                stdscr.addstr(5, 5, "OPTION 1", curses.A_STANDOUT)
-                stdscr.addstr(5, 15, "OPTION 2")
+                stdscr.addstr(6, 5, "OPTION 1", curses.A_STANDOUT)
+                stdscr.addstr(6, 15, "OPTION 2")
                 selection = 1
             elif key == "KEY_RIGHT":
-                stdscr.addstr(5, 5, "OPTION 1")
-                stdscr.addstr(5, 15, "OPTION 2", curses.A_STANDOUT)
+                stdscr.addstr(6, 5, "OPTION 1")
+                stdscr.addstr(6, 15, "OPTION 2", curses.A_STANDOUT)
                 selection = 2
             elif key == "KEY_DOWN":
-                stdscr.addstr(7, 5, f"You picked OPTION {selection}", curses.A_BOLD)
+                stdscr.addstr(8, 5, f"You picked OPTION {selection}", curses.A_BOLD)
             elif key == "q":
                 exit = True
 
@@ -71,7 +71,7 @@ def demo():
     stdscr.getch()
     drawbox()
     stdscr.addstr(3, 5, "This is significant because it only took 11 lines of Python to do so.", curses.A_BOLD)
-    stdscr.addstr(4, 5, "Press a key to see the code...", curses.A_STANDOUT)
+    stdscr.addstr(5, 5, "Press a key to see the code...", curses.A_STANDOUT)
     stdscr.getch()
     drawbox()
     stdscr.addstr(3, 5, "stdscr.addch(0, 0, '╔')")
@@ -113,13 +113,13 @@ def demo():
     stdscr.getch()
     drawbox()
     stdscr.addstr(3, 5, "And all of this is a total breeze to do. It only took me half an hour to write this demo!", curses.A_BOLD)
-    stdscr.addstr(4, 5, "Press a key...", curses.A_BLINK)
+    stdscr.addstr(5, 5, "Press a key...", curses.A_BLINK)
     stdscr.getch()
     drawmenu()
     drawbox()
     stdscr.addstr(3, 5, "Anyways, that's all I wanted to show you. It should be noted, however, that you will need to rewrite much of your", curses.A_BOLD)
     stdscr.addstr(4, 5, "code if you want to work with Curses.", curses.A_BOLD)
-    stdscr.addstr(4, 5, "Press a key to exit the program...", curses.A_BLINK)
+    stdscr.addstr(6, 5, "Press a key to exit the program...", curses.A_BLINK)
     stdscr.getch()
 
 # De-initializes curses.
