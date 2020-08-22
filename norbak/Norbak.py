@@ -65,7 +65,7 @@ def main(stdscr):
 
 ## The intro "cinematic".
 def intro():
-    #playsound("./intro.wav", False)
+    #playsound("./sounds/intro.wav", False)
     num0 = 10
     title1 = "A LucasH-DiskKun Production"
     title2 = "In Association With Tember.ca"
@@ -216,7 +216,7 @@ def combat(location, difficulty):
             elif armorloot == 5:
                 earmor = 5
                 earmorname = "Hardened Metal Armor"
-        elif loot >= 1:
+        elif loot == 1:
             weaponloot = randint(1, 5)
             if weaponloot == 1:
                 eweapon = 1
@@ -244,12 +244,10 @@ def combat(location, difficulty):
             enemyname = "Fungus"
             enemydmg = 2
             enemyhealth = 3
-            loot()
         elif enemyid == 2:
             enemyname = "Snail"
             enemydmg = 4
             enemyhealth = 5
-            loot()
         elif enemyid == 3:
             enemyname = "Insect"
             enemydmg = 6
