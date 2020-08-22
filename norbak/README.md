@@ -1,7 +1,11 @@
 # The Fires of Norbak
 
-version: 0.1
+version: 0.2
 
+In this version:
+ - added weapons & armor.
+ - fixed the runaway feature, so now when you unsuccessfully run away, you take the turn's damage as normal.
+ 
 imports: curses (windows-curses on Windows), random, time, playsound
 
 "Norbak.py" is the source, "/dist/Norbak" is an executable for MacOS only.
