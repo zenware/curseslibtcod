@@ -87,7 +87,6 @@ def start():
     typetext(5, "Here, take this map, it will guide you along your journey...", curses.A_BOLD)
     typetext(7, "To the Fires of Norbak!", curses.A_BOLD | curses.color_pair(2))
     stdscr.getch()
-    #viewmap()
 
 def viewmap():
     box()
@@ -271,9 +270,9 @@ def mainmenu():
 def ureg():
     box()
     stdscr.addstr(3, 38-len("Welcome, traveller. Enter your name below.")//2, "Welcome, traveller. Enter your name below.", curses.A_BOLD)
-    stdscr.addstr(7, 32, "____________", curses.A_BOLD)
+    curses.textpad.rectangle(stdscr, 5, 32, 7, 43)
+    #stdscr.addstr(7, 32, "____________", curses.A_BOLD)
     curses.echo()
-    curses.curs_set(1)
     pname = stdscr.getstr(6, 33, 10)
     pname = pname.decode('utf-8')
     curses.noecho()
