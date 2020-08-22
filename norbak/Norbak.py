@@ -26,28 +26,46 @@ curses.init_pair(3, curses.COLOR_GREEN, curses.COLOR_BLACK)
 ## For menu().
 selection = 0
 
-## Player data defaults. # NOTE: parmor not used in this version.
-## XP points
-pxp = 200
-## Armor level
-parmor = 0
-## Weapon level
-pweapon = 1
-## Total damage dealable
-pdmg = 0 + pweapon + pxp // 100
-## Total health
-phealth = 0 + parmor + pxp // 10
-## Playername variable declaration
-pname = 0
+earmor = 0
+earmorname = "None"
+eweapon = 0
+eweaponname = "None"
 
-## Main function: runs other functions. # TODO: clean this to be more consistent
+def playerinit():
+    ## Player data defaults.
+    ## XP points
+    global pxp
+    pxp = 200
+    ## Armor level and name
+    global parmor
+    global parmorname
+    parmor = 0
+    parmorname = "None"
+    ## Weapon level and name
+    global pweapon
+    global pweaponname
+    pweapon = 1
+    pweaponname = "Stick"
+    ## Total damage dealable
+    global pdmg
+    pdmg = pweapon + pxp // 100
+    ## Total health
+    global phealth
+    phealth = 0 + pxp // 10
+    ## Playername variable declaration
+    global pname
+    pname = 0
+
 def main(stdscr):
+    playerinit()
+    #viewmap()
     intro()
     mainmenu()
     viewmap()
 
 ## The intro "cinematic".
 def intro():
+    #playsound("./intro.wav", False)
     num0 = 10
     title1 = "A LucasH-DiskKun Production"
     title2 = "In Association With Tember.ca"
@@ -175,6 +193,46 @@ def loc(location, difficulty):
         viewmap()
 
 def combat(location, difficulty):
+    def loot():
+        global earmor
+        global earmorname
+        global eweapon
+        global eweaponname
+        loot = randint(1, 10)
+        if loot == 1:
+            armorloot = randint(1, 5)
+            if armorloot == 1:
+                earmor = 1
+                earmorname = "Cloth Rags"
+            elif armorloot == 2:
+                earmor = 2
+                earmorname = "Hardened Leather"
+            elif armorloot == 3:
+                earmor = 3
+                earmorname = "Chain Mail"
+            elif armorloot == 4:
+                earmor = 4
+                armorname = "Metal Armor"
+            elif armorloot == 5:
+                earmor = 5
+                earmorname = "Hardened Metal Armor"
+        elif loot >= 1:
+            weaponloot = randint(1, 5)
+            if weaponloot == 1:
+                eweapon = 1
+                eweaponname = "Toy Sword"
+            elif weaponloot == 2:
+                eweapon = 2
+                eweaponname = "Small Dagger"
+            elif weaponloot == 3:
+                eweapon = 3
+                eweaponname = "Staff"
+            elif weaponloot == 4:
+                eweapon = 4
+                eweaponname = "Short Sword"
+            elif weaponloot == 5:
+                eweapon = 5
+                eweaponname = "Long Sword"
     def displayhealth():
         stdscr.addstr(21, 2, f"{pname}'s health: {phealth}.", curses.color_pair(3) | curses.A_BOLD)
         stdscr.addstr(21, 50, f"{enemyname}'s health: {enemyhealth}", curses.color_pair(2) | curses.A_BOLD)
@@ -186,10 +244,12 @@ def combat(location, difficulty):
             enemyname = "Fungus"
             enemydmg = 2
             enemyhealth = 3
+            loot()
         elif enemyid == 2:
-            enemyname = "Shroom"
+            enemyname = "Snail"
             enemydmg = 4
             enemyhealth = 5
+            loot()
         elif enemyid == 3:
             enemyname = "Insect"
             enemydmg = 6
@@ -202,10 +262,12 @@ def combat(location, difficulty):
             enemyname = "Small Child"
             enemydmg = 10
             enemyhealth = 11
+            loot()
         elif enemyid == 6:
             enemyname = "Old Woman"
             enemydmg = 12
             enemyhealth = 13
+            loot()
         elif enemyid == 7:
             enemyname = "Baby Dragon"
             enemydmg = 14
@@ -218,10 +280,12 @@ def combat(location, difficulty):
             enemyname = "Goblin"
             enemydmg = 18
             enemyhealth = 19
+            loot()
         elif enemyid == 10:
             enemyname = "Goblin King"
             enemydmg = 20
             enemyhealth = 21
+            loot()
         stdscr.addstr(3, 38-len(f"You are entering combat with a {enemyname}!")//2, f"You are entering combat with a {enemyname}!", curses.A_BOLD | curses.color_pair(2))
         stdscr.getch()
         while True:
@@ -235,7 +299,10 @@ def combat(location, difficulty):
                 stdscr.addstr(3, 38-len(f"Attacking the {enemyname}!")//2, f"Attacking the {enemyname}!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
-                pturndmg = randint(0, pdmg)
+                global pweapon
+                pturndmg = randint(0, pdmg) - earmor
+                if pturndmg < 0:
+                    pturndmg = 0
                 enemyhealth -= pturndmg
                 box()
                 displayhealth()
@@ -250,10 +317,30 @@ def combat(location, difficulty):
                     box()
                     global pxp
                     pxp += enemyid*10
-                    stdscr.addstr(3, 38-len(f"You killed the {enemyname}! You get {enemyid} experience points.")//2, f"You killed the {enemyname}! You get {enemyid} experience points.", curses.color_pair(3) | curses.A_BOLD)
+                    stdscr.addstr(3, 38-len(f"You killed the {enemyname}! You get {enemyid*10} experience points.")//2, f"You killed the {enemyname}! You get {enemyid*10} experience points.", curses.color_pair(3) | curses.A_BOLD)
                     stdscr.addstr(4, 38-len(f"You now have {pxp} experience points!")//2, f"You now have {pxp} experience points!", curses.color_pair(3) | curses.A_BOLD)
-                    stdscr.refresh()
-                    stdscr.getch()
+                    if earmor != 0:
+                        stdscr.addstr(5, 38-len(f"The {enemyname} was wearing a {earmorname}!")//2, f"The {enemyname} was wearing a {earmorname}!")
+                        stdscr.refresh()
+                        stdscr.getch()
+                        menu("Pick up the armor?", curses.color_pair(1)|curses.A_BOLD, "Yes", "No")
+                        if selection == 1:
+                            global parmor
+                            parmor = earmor
+                            global parmorname
+                            parmorname = earmorname
+                    elif eweapon != 0:
+                        stdscr.addstr(5, 38-len(f"The {enemyname} was carrying a {eweaponname}!")//2, f"The {enemyname} was carrying a {eweaponname}!")
+                        stdscr.refresh()
+                        stdscr.getch()
+                        menu("Pick up the weapon?", curses.color_pair(1)|curses.A_BOLD, "Yes", "No")
+                        if selection == 1:
+                            pweapon = eweapon
+                            global pweaponname
+                            pweaponname = eweaponname
+                    else:
+                        stdscr.refresh()
+                        stdscr.getch()
                     loc(location, difficulty)
                 # Enemy's attack
                 box()
@@ -263,7 +350,9 @@ def combat(location, difficulty):
                 stdscr.addstr(3, 38-len(f"{enemyname} is attacking!")//2, f"{enemyname} is attacking!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
-                eturndmg = randint(0, enemydmg)
+                eturndmg = randint(0, enemydmg) + eweapon - parmor
+                if eturndmg < 0:
+                    eturndmg = 0
                 global phealth
                 phealth -= eturndmg
                 box()
@@ -282,11 +371,15 @@ def combat(location, difficulty):
                 displayhealth()
                 stdscr.addstr(3, 38-len("You spend the turn resting...")//2, "You spend the turn resting.", curses.A_BOLD)
                 stdscr.refresh()
+                time.sleep(1)
                 recover = phealth // 4
                 phealth += recover
+                if phealth > pxp // 10:
+                    phealth = pxp // 10
                 box()
                 displayhealth()
                 stdscr.addstr(3, 38-len(f"You recovered {recover} health!")//2, f"You recovered {recover} health!", curses.A_BOLD | curses.color_pair(3))
+                stdscr.refresh()
                 time.sleep(1)
                 box()
                 displayhealth()
@@ -295,7 +388,9 @@ def combat(location, difficulty):
                 stdscr.addstr(3, 38-len(f"{enemyname} is attacking!")//2, f"{enemyname} is attacking!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
-                eturndmg = randint(0, enemydmg)
+                eturndmg = randint(0, enemydmg) + eweapon - parmor
+                if eturndmg < 0:
+                    eturndmg = 0
                 #global phealth
                 phealth -= eturndmg
                 box()
@@ -321,12 +416,35 @@ def combat(location, difficulty):
                     box()
                     stdscr.addstr(3, 38-len("You didn't get away!")//2, "You didn't get away!", curses.A_BOLD)
                     stdscr.refresh()
-                    stdscr.getch()
+                    stdscr.refresh()
+                    eturndmg = randint(0, enemydmg) + eweapon - parmor
+                    if eturndmg < 0:
+                        eturndmg = 0
+                    #global phealth
+                    phealth -= eturndmg
+                    box()
+                    displayhealth()
+                    if eturndmg == 0:
+                        stdscr.addstr(3, 38-len(f"The {enemyname} missed you!")//2, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
+                    else:
+                        #playsound("./atk.wav", False)
+                        stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
+                    stdscr.refresh()
+                    time.sleep(1)
             elif selection == 4:
                 box()
-                displayhealth()
-                stdscr.addstr(3, 38-len(f"Enemy: {enemyhealth} health, can deal {enemydmg} damage, drops {enemyid*3} XP.")//2, f"Enemy: {enemyhealth} health, can deal {enemydmg}, drops {enemyid*3} XP.", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(5, 38-len(f"{pname}: {phealth} health, can deal {pdmg} damage.")//2, f"{pname}: {phealth} health, can deal {pdmg} damage.", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(3, 5, "Enemy:", curses.color_pair(2)|curses.A_BOLD)
+                stdscr.addstr(4, 5, f"Health: {enemyhealth}", curses.color_pair(2)|curses.A_BOLD)
+                stdscr.addstr(5, 5, f"Weapon: {eweaponname}", curses.color_pair(2)|curses.A_BOLD)
+                stdscr.addstr(6, 5, f"Armor: {earmorname}", curses.color_pair(2)|curses.A_BOLD)
+                stdscr.addstr(7, 5, f"Damage: {enemydmg}", curses.color_pair(2)|curses.A_BOLD)
+                stdscr.addstr(3, 50, "You:", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(4, 50, f"Health: {phealth}", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(5, 50, f"Weapon: {pweaponname}", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(6, 50, f"Armor: {parmorname}", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(7, 50, f"Damage: {pdmg}", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(8, 50, f"Experience: {pxp}", curses.color_pair(3)|curses.A_BOLD)
+                #stdscr.addstr(5, 38-len(f"{pname}: {phealth} health, can deal {pdmg} damage.")//2, f"{pname}: {phealth} health, can deal {pdmg} damage.", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.refresh()
                 stdscr.getch()
 
