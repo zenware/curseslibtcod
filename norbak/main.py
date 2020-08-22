@@ -1,12 +1,15 @@
 import curses
 import time
 import random
+#import playsound
+
+#from playsound import playsound
 from random import randint
 from curses import wrapper
 from curses import textpad
 from curses.textpad import Textbox
 
-# Init curses and window
+## Initialize curses and window
 stdscr = curses.initscr()
 curses.start_color()
 curses.noecho()
@@ -15,24 +18,35 @@ stdscr.keypad(True)
 curses.curs_set(0)
 stdscr.resize(24, 80)
 
+## Initialize color pairs
 curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
 curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
 curses.init_pair(3, curses.COLOR_GREEN, curses.COLOR_BLACK)
 
+## For menu().
 selection = 0
 
+## Player data defaults. # NOTE: parmor not used in this version.
+## XP points
 pxp = 200
+## Armor level
 parmor = 0
-pdmg = 0 + pxp // 100
-phealth = 0 + pxp // 10
+## Weapon level
 pweapon = 1
+## Total damage dealable
+pdmg = 0 + pweapon + pxp // 100
+## Total health
+phealth = 0 + parmor + pxp // 10
+## Playername variable declaration
 pname = 0
 
+## Main function: runs other functions. # TODO: clean this to be more consistent
 def main(stdscr):
     intro()
     mainmenu()
     viewmap()
 
+## The intro "cinematic".
 def intro():
     num0 = 10
     title1 = "A LucasH-DiskKun Production"
@@ -57,7 +71,7 @@ def intro():
         time.sleep(0.05)
         stdscr.addch(10, 38-(len(title1)//2)+i, title1[i], curses.color_pair(1))
         stdscr.refresh()
-    time.sleep(3)
+    time.sleep(1)
     for i in range(len(title1)):
         time.sleep(0.05)
         stdscr.addch(10, 38-(len(title1)//2)+i, " ")
@@ -66,7 +80,7 @@ def intro():
         time.sleep(0.05)
         stdscr.addch(10, 38-(len(title2)//2)+i, title2[i], curses.color_pair(1))
         stdscr.refresh()
-    time.sleep(3)
+    time.sleep(1)
     for i in range(len(title2)):
         time.sleep(0.05)
         stdscr.addch(10, 38-(len(title2)//2)+i, " ")
@@ -81,12 +95,62 @@ def intro():
         stdscr.addstr(num0 - i, 38-(len(title3)//2), title3, curses.color_pair(2) | curses.A_BOLD)
         stdscr.refresh()
 
+def mainmenu():
+    pxp = 200
+    parmor = 0
+    pdmg = 0 + pxp // 100
+    phealth = 0 + pxp // 10
+    pweapon = 1
+    pname = 0
+    global selection
+    box()
+    menu("THE FIRES OF NORBAK", curses.color_pair(2) | curses.A_BOLD, "PLAY", "QUIT")
+    if selection == 1:
+        ureg()
+    else:
+        end()
+
+def ureg():
+    box()
+    stdscr.addstr(3, 38-len("Welcome, traveller. Enter your name below.")//2, "Welcome, traveller. Enter your name below.", curses.A_BOLD)
+    curses.textpad.rectangle(stdscr, 5, 32, 7, 43)
+    #stdscr.addstr(7, 32, "____________", curses.A_BOLD)
+    curses.echo()
+    pname = stdscr.getstr(6, 33, 10)
+    pname = pname.decode('utf-8')
+    if pname == "":
+        ureg()
+    curses.noecho()
+    curses.curs_set(0)
+    box()
+    typetext(3, "\"Could it be? The prophecy fulfilled?", curses.A_BOLD)
+    typetext(5, "Our land has fallen under a dark depression.", curses.A_BOLD)
+    typetext(7, "A powerful mage has put all of the animals under a spell.", curses.A_BOLD)
+    typetext(9, "They serve the mage and attack anybody who comes near him.", curses.A_BOLD)
+    typetext(11, "We are in desperate need of a warrior to defeat the mage.", curses.A_BOLD)
+    typetext(13, f"The prophecy states that a powerful warrior with the name {pname}", curses.A_BOLD)
+    typetext(14, "will come to save our lives and land!\"", curses.A_BOLD)
+    typetext(16, f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1))
+    for i in range(6):
+        box()
+        stdscr.addstr(13-i*2, 38-(len(f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!")//2), f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1))
+        time.sleep(0.5)
+        stdscr.refresh()
+    menu(f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1), "Yes, I am.", "No, I am not.")
+    if selection == 1:
+        start()
+    elif selection == 2:
+        box()
+        typetext(3, "Oh, only the gods above can save us now!", curses.A_BOLD)
+        gameover()
+
 def start():
     box()
     typetext(3, "Thank the heavens!", curses.A_BOLD)
     typetext(5, "Here, take this map, it will guide you along your journey...", curses.A_BOLD)
     typetext(7, "To the Fires of Norbak!", curses.A_BOLD | curses.color_pair(2))
     stdscr.getch()
+    #viewmap()
 
 def viewmap():
     box()
@@ -170,7 +234,7 @@ def combat(location, difficulty):
                 stdscr.addstr(3, 38-len(f"Attacking the {enemyname}!")//2, f"Attacking the {enemyname}!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
-                pturndmg = randint(0, pdmg+pweapon)
+                pturndmg = randint(0, pdmg)
                 enemyhealth -= pturndmg
                 box()
                 displayhealth()
@@ -249,55 +313,9 @@ def combat(location, difficulty):
                 box()
                 displayhealth()
                 stdscr.addstr(3, 38-len(f"Enemy: {enemyhealth} health, can deal {enemydmg} damage, drops {enemyid*3} XP.")//2, f"Enemy: {enemyhealth} health, can deal {enemydmg}, drops {enemyid*3} XP.", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(5, 38-len(f"{pname}: {phealth} health, can deal {pdmg + pweapon} damage.")//2, f"{pname}: {phealth} health, can deal {pdmg + pweapon} damage.", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(5, 38-len(f"{pname}: {phealth} health, can deal {pdmg} damage.")//2, f"{pname}: {phealth} health, can deal {pdmg} damage.", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.refresh()
                 stdscr.getch()
-def mainmenu():
-    pxp = 200
-    parmor = 0
-    pdmg = 0 + pxp // 100
-    phealth = 0 + pxp // 10
-    pweapon = 1
-    pname = 0
-    global selection
-    box()
-    menu("THE FIRES OF NORBAK", curses.color_pair(2) | curses.A_BOLD, "PLAY", "QUIT")
-    if selection == 1:
-        ureg()
-    else:
-        end()
-
-def ureg():
-    box()
-    stdscr.addstr(3, 38-len("Welcome, traveller. Enter your name below.")//2, "Welcome, traveller. Enter your name below.", curses.A_BOLD)
-    curses.textpad.rectangle(stdscr, 5, 32, 7, 43)
-    #stdscr.addstr(7, 32, "____________", curses.A_BOLD)
-    curses.echo()
-    pname = stdscr.getstr(6, 33, 10)
-    pname = pname.decode('utf-8')
-    curses.noecho()
-    curses.curs_set(0)
-    box()
-    typetext(3, "\"Could it be? The prophecy fulfilled?", curses.A_BOLD)
-    typetext(5, "Our land has fallen under a dark depression.", curses.A_BOLD)
-    typetext(7, "A powerful mage has put all of the animals under a spell.", curses.A_BOLD)
-    typetext(9, "They serve the mage and attack anybody who comes near him.", curses.A_BOLD)
-    typetext(11, "We are in desperate need of a warrior to defeat the mage.", curses.A_BOLD)
-    typetext(13, f"The prophecy states that a powerful warrior with the name {pname}", curses.A_BOLD)
-    typetext(14, "will come to save our lives and land!", curses.A_BOLD)
-    typetext(16, f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1))
-    for i in range(6):
-        box()
-        stdscr.addstr(13-i*2, 38-(len(f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!")//2), f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1))
-        time.sleep(0.5)
-        stdscr.refresh()
-    menu(f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1), "Yes, I am.", "No, I am not.")
-    if selection == 1:
-        start()
-    elif selection == 2:
-        box()
-        typetext(3, "Oh, only the gods above can save us now!", curses.A_BOLD)
-        gameover()
 
 def menu(title, titleattr, option1, option2, option3="", option4="", option5="", option6=""):
     global selection
@@ -432,3 +450,4 @@ def end():
     quit()
 
 wrapper(main)
+
