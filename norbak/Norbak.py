@@ -198,7 +198,7 @@ def combat(location, difficulty):
         global earmorname
         global eweapon
         global eweaponname
-        loot = randint(1, 10)
+        loot = randint(1, 4)
         if loot == 1:
             armorloot = randint(1, 5)
             if armorloot == 1:
@@ -216,7 +216,7 @@ def combat(location, difficulty):
             elif armorloot == 5:
                 earmor = 5
                 earmorname = "Hardened Metal Armor"
-        elif loot == 1:
+        elif loot == 2:
             weaponloot = randint(1, 5)
             if weaponloot == 1:
                 eweapon = 1
@@ -307,7 +307,7 @@ def combat(location, difficulty):
                 if pturndmg == 0:
                     stdscr.addstr(3, 38-len(f"You missed the {enemyname}!")//2, f"You missed the {enemyname}!", curses.A_BOLD)
                 else:
-                    #playsound("./atk.wav", False)
+                    #playsound("./sounds/atk.wav", False)
                     stdscr.addstr(3, 38-len(f"You dealt {pturndmg} to the {enemyname}!")//2, f"You dealt {pturndmg} damage to the {enemyname}!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
@@ -358,7 +358,7 @@ def combat(location, difficulty):
                 if eturndmg == 0:
                     stdscr.addstr(3, 38-len(f"The {enemyname} missed you!")//2, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
                 else:
-                    #playsound("./atk.wav", False)
+                    #playsound("./sounds/atk.wav", False)
                     stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
@@ -396,7 +396,7 @@ def combat(location, difficulty):
                 if eturndmg == 0:
                     stdscr.addstr(3, 38-len(f"The {enemyname} missed you!")//2, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
                 else:
-                    #playsound("./atk.wav", False)
+                    #playsound("./sounds/atk.wav", False)
                     stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
@@ -425,7 +425,7 @@ def combat(location, difficulty):
                     if eturndmg == 0:
                         stdscr.addstr(3, 38-len(f"The {enemyname} missed you!")//2, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
                     else:
-                        #playsound("./atk.wav", False)
+                        #playsound("./sounds/atk.wav", False)
                         stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
                     stdscr.refresh()
                     time.sleep(1)
@@ -508,7 +508,7 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             else:
                 selection += 1
         elif key == " ":
-            #playsound("./confirm.wav", False)
+            #playsound("./sounds/confirm.wav", False)
             return
 
         if selection == 1:
@@ -556,7 +556,7 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
 
 def typetext(y, text, attr):
     for i in range(len(text)):
-        #playsound("./click.wav", False)
+        #playsound("./sounds/click.wav", False)
         stdscr.addch(y, 38-(len(text)//2)+i, text[i], attr)
         time.sleep(0.05)
         stdscr.refresh()
@@ -571,7 +571,7 @@ def gameover():
     box()
     stdscr.refresh()
     time.sleep(1)
-    #playsound("./death.wav", False)
+    #playsound("./sounds/death.wav", False)
     for i in range(len("GAME OVER")):
         stdscr.addch(11, 38-(len("GAME OVER")//2)+i, "GAME OVER"[i], curses.color_pair(2) | curses.A_BOLD)
         time.sleep(0.10)
