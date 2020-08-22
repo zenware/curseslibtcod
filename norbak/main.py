@@ -75,7 +75,7 @@ def intro():
         time.sleep(0.10)
         stdscr.addch(10, 38-(len(title3)//2)+i, title3[i], curses.color_pair(2) | curses.A_BOLD)
         stdscr.refresh()
-    for i in range(7):
+    for i in range(8):
         box()
         time.sleep(0.5)
         stdscr.addstr(num0 - i, 38-(len(title3)//2), title3, curses.color_pair(2) | curses.A_BOLD)
