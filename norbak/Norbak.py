@@ -1,6 +1,7 @@
 import curses
 import time
 import random
+#import keyboard
 #import playsound
 
 #from playsound import playsound
@@ -118,12 +119,7 @@ def intro():
         stdscr.refresh()
 
 def mainmenu():
-    pxp = 200
-    parmor = 0
-    pdmg = 0 + pxp // 100
-    phealth = 0 + pxp // 10
-    pweapon = 1
-    pname = 0
+    playerinit()
     global selection
     box()
     menu("THE FIRES OF NORBAK", curses.color_pair(2) | curses.A_BOLD, "PLAY", "QUIT")
@@ -401,8 +397,8 @@ def combat(location, difficulty):
         elif loot == 3:
             coinloot = randint(1, 10) * enemyid
     def displayhealth():
-        stdscr.addstr(21, 2, f"{pname}'s health: {phealth}.", curses.color_pair(3) | curses.A_BOLD)
-        stdscr.addstr(21, 50, f"{enemyname}'s health: {enemyhealth}", curses.color_pair(2) | curses.A_BOLD)
+        stdscr.addstr(22, 2, f"{pname}'s health: {phealth}.", curses.color_pair(3) | curses.A_BOLD)
+        stdscr.addstr(22, 50, f"{enemyname}'s health: {enemyhealth}", curses.color_pair(2) | curses.A_BOLD)
     exit = False
     box()
     while exit == False:
@@ -600,6 +596,8 @@ def combat(location, difficulty):
                         stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
                     stdscr.refresh()
                     time.sleep(1)
+                    if phealth <= 0:
+                        gameover()
             elif selection == 4:
                 box()
                 stdscr.addstr(3, 5, "Enemy:", curses.color_pair(2)|curses.A_BOLD)
@@ -783,7 +781,15 @@ def typetext(y, text, attr):
         stdscr.addch(y, 38-(len(text)//2)+i, text[i], attr)
         time.sleep(0.05)
         stdscr.refresh()
-    time.sleep(0.5)
+        stdscr.nodelay(True)
+        skip = stdscr.getch()
+        if skip == 32:
+            stdscr.addstr(y, 1, "                                                                                ")
+            stdscr.addstr(y, 38-(len(text)//2), text, attr)
+            stdscr.border()
+            stdscr.refresh()
+            stdscr.nodelay(False)
+            break
 
 def box():
     stdscr.erase()
