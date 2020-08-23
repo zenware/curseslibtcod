@@ -30,6 +30,7 @@ earmor = 0
 earmorname = "None"
 eweapon = 0
 eweaponname = "None"
+coinloot = 0
 
 def playerinit():
     ## Player data defaults.
@@ -55,6 +56,9 @@ def playerinit():
     ## Playername variable declaration
     global pname
     pname = 0
+    ## Player's money
+    global pcoins
+    pcoins = 200
 
 def main(stdscr):
     playerinit()
@@ -142,7 +146,7 @@ def ureg():
     curses.noecho()
     curses.curs_set(0)
     box()
-    typetext(3, "\"Could it be? The prophecy fulfilled?", curses.A_BOLD)
+    typetext(3, "Could it be? The prophecy fulfilled?", curses.A_BOLD)
     typetext(5, "Our land has fallen under a dark depression.", curses.A_BOLD)
     typetext(7, "A powerful mage has put all of the animals under a spell.", curses.A_BOLD)
     typetext(9, "They serve the mage and attack anybody who comes near him.", curses.A_BOLD)
@@ -173,7 +177,7 @@ def start():
 
 def viewmap():
     box()
-    menu("Map", curses.color_pair(1) | curses.A_BOLD, "The Fungal Forests", "The Vermin Caves", "The Evil Town", "The Dragon's Lair", "Goblin Mountain")
+    menu("Map", curses.color_pair(1) | curses.A_BOLD, "The Fungal Forests", "The Vermin Caves", "The Evil Town", "The Dragon's Lair", "Goblin Mountain", "The Good Town (Shop)")
     if selection == 1:
         loc("The Fungal Forests", 2)
     elif selection == 2:
@@ -184,6 +188,166 @@ def viewmap():
         loc("The Dragon's Lair", 8)
     elif selection == 5:
         loc("Goblin Mountain", 10)
+    elif selection == 6:
+        town()
+
+def town():
+    global pcoins
+    global pweaponname
+    global pweapon
+    global parmorname
+    global parmor
+    menu("Shop", curses.color_pair(3)|curses.A_BOLD, "Armor", "Weapons", "View Map")
+    if selection == 1:
+        menu("Armor Shop", curses.color_pair(3)|curses.A_BOLD, "Cloth Rags: 100", "Hardened Leather: 200", "Chain Mail: 300", "Metal Armor: 400", "Hardened Metal Armor: 500", "Back")
+        if selection == 1:
+            if pcoins >= 100:
+                pcoins -= 100
+                parmor = 1
+                parmorname = "Cloth Rags"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 2:
+            if pcoins >= 200:
+                pcoins -= 200
+                parmor = 2
+                parmorname = "Hardened Leather"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 3:
+            if pcoins >= 300:
+                pcoins -= 300
+                parmor = 3
+                parmorname = "Chain Mail"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 4:
+            if pcoins >= 400:
+                pcoins -= 400
+                parmor = 4
+                parmorname = "Metal Armor"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 5:
+            if pcoins >= 500:
+                pcoins -= 500
+                parmor = 5
+                parmorname = "Hardened Metal Armor"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 6:
+            town()
+    elif selection == 2:
+        menu("Weapon Shop", curses.color_pair(3)|curses.A_BOLD, "Toy Sword: 100", "Small Dagger: 200", "Staff: 300", "Short Sword: 400", "Long Sword: 500", "Back")
+        if selection == 1:
+            if pcoins >= 100:
+                pcoins -= 100
+                pweapon = 1
+                pweaponname = "Toy Sword"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 2:
+            if pcoins >= 200:
+                pcoins -= 200
+                pweapon = 2
+                pweaponname = "Small Dagger"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 3:
+            if pcoins >= 300:
+                pcoins -= 300
+                pweapon = 3
+                pweaponame = "Staff"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 4:
+            if pcoins >= 400:
+                pcoins -= 400
+                pweapon = 4
+                pweaponname = "Short Sword"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 5:
+            if pcoins >= 500:
+                pcoins -= 500
+                pweapon = 5
+                pweaponname = "Long Sword"
+                box()
+                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                stdscr.getch()
+                town()
+            else:
+                box()
+                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                stdscr.getch()
+                town()
+        elif selection == 6:
+            town()
+    elif selection == 3:
+        viewmap()
 
 def loc(location, difficulty):
     menu(f"{location}", curses.color_pair(3) | curses.A_BOLD, "Look for something to kill", "View map")
@@ -198,7 +362,8 @@ def combat(location, difficulty):
         global earmorname
         global eweapon
         global eweaponname
-        loot = randint(1, 4)
+        global coinloot
+        loot = randint(1, 10)
         if loot == 1:
             armorloot = randint(1, 5)
             if armorloot == 1:
@@ -233,6 +398,8 @@ def combat(location, difficulty):
             elif weaponloot == 5:
                 eweapon = 5
                 eweaponname = "Long Sword"
+        elif loot == 3:
+            coinloot = randint(1, 10) * enemyid
     def displayhealth():
         stdscr.addstr(21, 2, f"{pname}'s health: {phealth}.", curses.color_pair(3) | curses.A_BOLD)
         stdscr.addstr(21, 50, f"{enemyname}'s health: {enemyhealth}", curses.color_pair(2) | curses.A_BOLD)
@@ -270,10 +437,12 @@ def combat(location, difficulty):
             enemyname = "Baby Dragon"
             enemydmg = 14
             enemyhealth = 15
+            loot()
         elif enemyid == 8:
             enemyname = "Father Dragon"
             enemydmg = 16
             enemyhealth = 17
+            loot()
         elif enemyid == 9:
             enemyname = "Goblin"
             enemydmg = 18
@@ -319,7 +488,6 @@ def combat(location, difficulty):
                     stdscr.addstr(4, 38-len(f"You now have {pxp} experience points!")//2, f"You now have {pxp} experience points!", curses.color_pair(3) | curses.A_BOLD)
                     if earmor != 0:
                         stdscr.addstr(5, 38-len(f"The {enemyname} was wearing a {earmorname}!")//2, f"The {enemyname} was wearing a {earmorname}!")
-                        stdscr.refresh()
                         stdscr.getch()
                         menu("Pick up the armor?", curses.color_pair(1)|curses.A_BOLD, "Yes", "No")
                         if selection == 1:
@@ -329,17 +497,21 @@ def combat(location, difficulty):
                             parmorname = earmorname
                     elif eweapon != 0:
                         stdscr.addstr(5, 38-len(f"The {enemyname} was carrying a {eweaponname}!")//2, f"The {enemyname} was carrying a {eweaponname}!")
-                        stdscr.refresh()
                         stdscr.getch()
                         menu("Pick up the weapon?", curses.color_pair(1)|curses.A_BOLD, "Yes", "No")
                         if selection == 1:
                             pweapon = eweapon
                             global pweaponname
                             pweaponname = eweaponname
+                    elif coinloot != 0:
+                        global pcoins
+                        stdscr.addstr(5, 38-len(f"The {enemyname} dropped {coinloot} coins!")//2, f"The {enemyname} dropped {coinloot} coins!")
+                        pcoins += coinloot
+                        stdscr.getch()
                     else:
-                        stdscr.refresh()
                         stdscr.getch()
                     loc(location, difficulty)
+
                 # Enemy's attack
                 box()
                 displayhealth()
@@ -440,13 +612,13 @@ def combat(location, difficulty):
                 stdscr.addstr(4, 50, f"Health: {phealth}", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(5, 50, f"Weapon: {pweaponname}", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(6, 50, f"Armor: {parmorname}", curses.color_pair(3)|curses.A_BOLD)
-                stdscr.addstr(7, 50, f"Damage: {pdmg}", curses.color_pair(3)|curses.A_BOLD)
+                stdscr.addstr(7, 50, f"Damage: {pdmg+pweapon}", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(8, 50, f"Experience: {pxp}", curses.color_pair(3)|curses.A_BOLD)
                 #stdscr.addstr(5, 38-len(f"{pname}: {phealth} health, can deal {pdmg} damage.")//2, f"{pname}: {phealth} health, can deal {pdmg} damage.", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.refresh()
                 stdscr.getch()
 
-def menu(title, titleattr, option1, option2, option3="", option4="", option5="", option6=""):
+def menu(title, titleattr, option1, option2, option3="", option4="", option5="", option6="", option7="", option8=""):
     global selection
     selection = 1
     attr1 = curses.A_UNDERLINE
@@ -455,6 +627,8 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
     attr4 = 0
     attr5 = 0
     attr6 = 0
+    attr7 = 0
+    attr8 = 0
     while True:
         if option3 == "":
             items = 2
@@ -486,7 +660,7 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
             stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
             stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
-        elif option6 != "":
+        elif option6 != "" and option7 == "":
             items = 6
             box()
             stdscr.addstr(3, 38-len(title)//2, title, titleattr)
@@ -496,6 +670,29 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
             stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
             stdscr.addstr(15, 38-(len(option6)//2), option6, attr6)
+        elif option7 != "" and option8 == "":
+            items = 7
+            box()
+            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
+            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
+            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
+            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
+            stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
+            stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
+            stdscr.addstr(15, 38-(len(option6)//2), option6, attr6)
+            stdscr.addstr(17, 38-(len(option7)//2), option7, attr7)
+        elif option8 != "":
+            items = 8
+            box()
+            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
+            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
+            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
+            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
+            stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
+            stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
+            stdscr.addstr(15, 38-(len(option6)//2), option6, attr6)
+            stdscr.addstr(17, 38-(len(option7)//2), option7, attr7)
+            stdscr.addstr(19, 38-(len(option8)//2), option8, attr8)
         key = stdscr.getkey()
         if key == "KEY_UP":
             if selection == 1:
@@ -510,7 +707,6 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
         elif key == " ":
             #playsound("./sounds/confirm.wav", False)
             return
-
         if selection == 1:
             attr1 = curses.A_UNDERLINE
             attr2 = 0
@@ -518,6 +714,8 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             attr4 = 0
             attr5 = 0
             attr6 = 0
+            attr7 = 0
+            attr8 = 0
         elif selection == 2:
             attr2 = curses.A_UNDERLINE
             attr1 = 0
@@ -525,6 +723,8 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             attr4 = 0
             attr5 = 0
             attr6 = 0
+            attr7 = 0
+            attr8 = 0
         elif selection == 3:
             attr3 = curses.A_UNDERLINE
             attr1 = 0
@@ -532,6 +732,8 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             attr4 = 0
             attr5 = 0
             attr6 = 0
+            attr7 = 0
+            attr8 = 0
         elif selection == 4:
             attr4 = curses.A_UNDERLINE
             attr1 = 0
@@ -539,6 +741,8 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             attr3 = 0
             attr5 = 0
             attr6 = 0
+            attr7 = 0
+            attr8 = 0
         elif selection == 5:
             attr5 = curses.A_UNDERLINE
             attr1 = 0
@@ -546,6 +750,8 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             attr3 = 0
             attr4 = 0
             attr6 = 0
+            attr7 = 0
+            attr8 = 0
         elif selection == 6:
             attr6 = curses.A_UNDERLINE
             attr1 = 0
@@ -553,7 +759,26 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
             attr3 = 0
             attr4 = 0
             attr5 = 0
-
+            attr7 = 0
+            attr8 = 0
+        elif selection == 7:
+            attr7 = curses.A_UNDERLINE
+            attr1 = 0
+            attr2 = 0
+            attr3 = 0
+            attr4 = 0
+            attr5 = 0
+            sttr6 = 0
+            attr8 = 0
+        elif selection == 8:
+            attr8 = curses.A_UNDERLINE
+            attr1 = 0
+            attr2 = 0
+            attr3 = 0
+            attr4 = 0
+            attr5 = 0
+            sttr6 = 0
+            attr7 = 0
 def typetext(y, text, attr):
     for i in range(len(text)):
         #playsound("./sounds/click.wav", False)
