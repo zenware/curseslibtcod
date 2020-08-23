@@ -479,7 +479,7 @@ def combat(location, difficulty):
                 if enemyhealth <= 0:
                     box()
                     global pxp
-                    pxp += enemyid*10
+                    pxp += enemyid*5
                     stdscr.addstr(3, 38-len(f"You killed the {enemyname}! You get {enemyid*10} experience points.")//2, f"You killed the {enemyname}! You get {enemyid*10} experience points.", curses.color_pair(3) | curses.A_BOLD)
                     stdscr.addstr(4, 38-len(f"You now have {pxp} experience points!")//2, f"You now have {pxp} experience points!", curses.color_pair(3) | curses.A_BOLD)
                     if earmor != 0:
@@ -817,3 +817,4 @@ def end():
     quit()
 
 wrapper(main)
+
