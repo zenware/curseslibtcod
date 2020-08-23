@@ -363,7 +363,7 @@ def combat(location, difficulty):
         global eweapon
         global eweaponname
         global coinloot
-        loot = randint(1, 10)
+        loot = randint(1, 3)
         if loot == 1:
             armorloot = randint(1, 5)
             if armorloot == 1:
@@ -585,8 +585,7 @@ def combat(location, difficulty):
                 elif gotaway == 0 or 1:
                     box()
                     stdscr.addstr(3, 38-len("You didn't get away!")//2, "You didn't get away!", curses.A_BOLD)
-                    stdscr.refresh()
-                    stdscr.refresh()
+                    stdscr.getch()
                     eturndmg = randint(0, enemydmg) + eweapon - parmor
                     if eturndmg < 0:
                         eturndmg = 0
@@ -607,14 +606,13 @@ def combat(location, difficulty):
                 stdscr.addstr(4, 5, f"Health: {enemyhealth}", curses.color_pair(2)|curses.A_BOLD)
                 stdscr.addstr(5, 5, f"Weapon: {eweaponname}", curses.color_pair(2)|curses.A_BOLD)
                 stdscr.addstr(6, 5, f"Armor: {earmorname}", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(7, 5, f"Damage: {enemydmg}", curses.color_pair(2)|curses.A_BOLD)
+                stdscr.addstr(7, 5, f"Damage: {enemydmg+eweapon}", curses.color_pair(2)|curses.A_BOLD)
                 stdscr.addstr(3, 50, "You:", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(4, 50, f"Health: {phealth}", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(5, 50, f"Weapon: {pweaponname}", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(6, 50, f"Armor: {parmorname}", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(7, 50, f"Damage: {pdmg+pweapon}", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.addstr(8, 50, f"Experience: {pxp}", curses.color_pair(3)|curses.A_BOLD)
-                #stdscr.addstr(5, 38-len(f"{pname}: {phealth} health, can deal {pdmg} damage.")//2, f"{pname}: {phealth} health, can deal {pdmg} damage.", curses.color_pair(3)|curses.A_BOLD)
                 stdscr.refresh()
                 stdscr.getch()
 
