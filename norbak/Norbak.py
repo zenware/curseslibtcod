@@ -129,6 +129,7 @@ def mainmenu():
         end()
 
 def ureg():
+    global pname
     box()
     stdscr.addstr(3, 38-len("Welcome, traveller. Enter your name below.")//2, "Welcome, traveller. Enter your name below.", curses.A_BOLD)
     curses.textpad.rectangle(stdscr, 5, 32, 7, 43)
