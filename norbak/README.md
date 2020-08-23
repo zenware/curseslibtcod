@@ -5,8 +5,10 @@ version: 0.31
 Changelog:
 v0.31 (current):
  - Added typetext skipping; for text that appears one character at a time, you can press space to display the full text instantly.
+
 v0.3:
  - Added shop & currency
+
 v0.2:
  - Added weapons & armor.
  - Fixed the runaway feature, so now when you unsuccessfully run away, you take the turn's damage as normal.
