@@ -1,8 +1,11 @@
 # The Fires of Norbak
 
-version: 0.2
+version: 0.3
 
-In this version:
+Changelog:
+v0.3 (current):
+ - added shop & currency
+v0.2:
  - added weapons & armor.
  - fixed the runaway feature, so now when you unsuccessfully run away, you take the turn's damage as normal.
  
