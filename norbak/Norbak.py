@@ -398,6 +398,7 @@ def combat(location, difficulty):
         elif loot == 3:
             coinloot = randint(1, 10) * enemyid
     def displayhealth():
+        global pname
         stdscr.addstr(22, 2, f"{pname}'s health: {phealth}.", curses.color_pair(3) | curses.A_BOLD)
         stdscr.addstr(22, 50, f"{enemyname}'s health: {enemyhealth}", curses.color_pair(2) | curses.A_BOLD)
     exit = False
