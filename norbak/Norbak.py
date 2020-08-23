@@ -790,7 +790,7 @@ def typetext(y, text, attr):
             stdscr.refresh()
             stdscr.nodelay(False)
             break
-
+    stdscr.nodelay(True)
 def box():
     stdscr.erase()
     stdscr.border()
