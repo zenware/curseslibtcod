@@ -92,30 +92,33 @@ def intro():
     stdscr.bkgd(" ")
     for i in range(len(title1)):
         time.sleep(0.05)
-        stdscr.addch(10, 38-(len(title1)//2)+i, title1[i], curses.color_pair(1))
+        center(title1)
+        stdscr.addch(10, cy+i, title1[i], curses.color_pair(1))
         stdscr.refresh()
     time.sleep(1)
     for i in range(len(title1)):
         time.sleep(0.05)
-        stdscr.addch(10, 38-(len(title1)//2)+i, " ")
+        stdscr.addch(10, cy+i, " ")
         stdscr.refresh()
     for i in range(len(title2)):
         time.sleep(0.05)
-        stdscr.addch(10, 38-(len(title2)//2)+i, title2[i], curses.color_pair(1))
+        center(title2)
+        stdscr.addch(10, cy+i, title2[i], curses.color_pair(1))
         stdscr.refresh()
     time.sleep(1)
     for i in range(len(title2)):
         time.sleep(0.05)
-        stdscr.addch(10, 38-(len(title2)//2)+i, " ")
+        stdscr.addch(10, cy+i, " ")
         stdscr.refresh()
     for i in range(len(title3)):
         time.sleep(0.10)
-        stdscr.addch(10, 38-(len(title3)//2)+i, title3[i], curses.color_pair(2) | curses.A_BOLD)
+        center(title3)
+        stdscr.addch(10, cy+i, title3[i], curses.color_pair(2) | curses.A_BOLD)
         stdscr.refresh()
     for i in range(8):
         box()
         time.sleep(0.5)
-        stdscr.addstr(num0 - i, 38-(len(title3)//2), title3, curses.color_pair(2) | curses.A_BOLD)
+        stdscr.addstr(num0 - i, cy, title3, curses.color_pair(2) | curses.A_BOLD)
         stdscr.refresh()
 
 def mainmenu():
@@ -131,7 +134,8 @@ def mainmenu():
 def ureg():
     global pname
     box()
-    stdscr.addstr(3, 38-len("Welcome, traveller. Enter your name below.")//2, "Welcome, traveller. Enter your name below.", curses.A_BOLD)
+    center("Welcome, traveller. Enter your name below.")
+    stdscr.addstr(3, cy, "Welcome, traveller. Enter your name below.", curses.A_BOLD)
     curses.textpad.rectangle(stdscr, 5, 32, 7, 43)
     #stdscr.addstr(7, 32, "____________", curses.A_BOLD)
     curses.echo()
@@ -153,7 +157,8 @@ def ureg():
     typetext(16, f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1))
     for i in range(12):
         box()
-        stdscr.addstr(14-i, 38-(len(f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!")//2), f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1))
+        center(f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!")
+        stdscr.addstr(14-i, cy, f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1))
         time.sleep(0.10)
         stdscr.refresh()
     menu(f"Oh, {pname}, tell us you are the powerful warrior we've been waiting on!", curses.A_BOLD | curses.color_pair(1), "Yes, I am.", "No, I am not.")
@@ -203,12 +208,14 @@ def town():
                 parmor = 1
                 parmorname = "Cloth Rags"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {parmorname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 2:
@@ -217,12 +224,14 @@ def town():
                 parmor = 2
                 parmorname = "Hardened Leather"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {parmorname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 3:
@@ -231,12 +240,14 @@ def town():
                 parmor = 3
                 parmorname = "Chain Mail"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {parmorname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 4:
@@ -245,12 +256,14 @@ def town():
                 parmor = 4
                 parmorname = "Metal Armor"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {parmorname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 5:
@@ -259,12 +272,14 @@ def town():
                 parmor = 5
                 parmorname = "Hardened Metal Armor"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {parmorname}! You have {pcoins} coins left.")//2, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {parmorname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {parmorname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 6:
@@ -277,12 +292,14 @@ def town():
                 pweapon = 1
                 pweaponname = "Toy Sword"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {pweaponname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 2:
@@ -291,12 +308,14 @@ def town():
                 pweapon = 2
                 pweaponname = "Small Dagger"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {pweaponname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 3:
@@ -305,12 +324,14 @@ def town():
                 pweapon = 3
                 pweaponame = "Staff"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {pweaponname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 4:
@@ -319,12 +340,14 @@ def town():
                 pweapon = 4
                 pweaponname = "Short Sword"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {pweaponname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 5:
@@ -333,12 +356,14 @@ def town():
                 pweapon = 5
                 pweaponname = "Long Sword"
                 box()
-                stdscr.addstr(3, 38-len(f"You bought a {pweaponname}! You have {pcoins} coins left.")//2, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
+                center(f"You bought a {pweaponname}! You have {pcoins} coins left.")
+                stdscr.addstr(3, cy, f"You bought a {pweaponname}! You have {pcoins} coins left.", curses.A_BOLD)
                 stdscr.getch()
                 town()
             else:
                 box()
-                stdscr.addstr(3, 38-len("You don't have enough coins!")//2, "You don't have enough coins!", curses.A_BOLD)
+                center("You don't have enough coins!")
+                stdscr.addstr(3, cy, "You don't have enough coins!", curses.A_BOLD)
                 stdscr.getch()
                 town()
         elif selection == 6:
@@ -451,7 +476,8 @@ def combat(location, difficulty):
             enemydmg = 20
             enemyhealth = 21
             loot()
-        stdscr.addstr(3, 38-len(f"You are entering combat with a {enemyname}!")//2, f"You are entering combat with a {enemyname}!", curses.A_BOLD | curses.color_pair(2))
+        center(f"You are entering combat with a {enemyname}!")
+        stdscr.addstr(3, cy, f"You are entering combat with a {enemyname}!", curses.A_BOLD | curses.color_pair(2))
         stdscr.getch()
         while True:
             menu(f"{enemyname}", curses.color_pair(2) | curses.A_BOLD, "ATTACK", "DEFEND", "RUN", "STATS")
@@ -461,7 +487,8 @@ def combat(location, difficulty):
                 displayhealth()
                 stdscr.refresh()
                 time.sleep(1)
-                stdscr.addstr(3, 38-len(f"Attacking the {enemyname}!")//2, f"Attacking the {enemyname}!", curses.color_pair(2) | curses.A_BOLD)
+                center(f"Attacking the {enemyname}!")
+                stdscr.addstr(3, cy, f"Attacking the {enemyname}!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
                 global pweapon
@@ -472,20 +499,25 @@ def combat(location, difficulty):
                 box()
                 displayhealth()
                 if pturndmg == 0:
-                    stdscr.addstr(3, 38-len(f"You missed the {enemyname}!")//2, f"You missed the {enemyname}!", curses.A_BOLD)
+                    center(f"You missed the {enemyname}!")
+                    stdscr.addstr(3, cy, f"You missed the {enemyname}!", curses.A_BOLD)
                 else:
                     #playsound("./sounds/atk.wav", False)
-                    stdscr.addstr(3, 38-len(f"You dealt {pturndmg} to the {enemyname}!")//2, f"You dealt {pturndmg} damage to the {enemyname}!", curses.color_pair(2) | curses.A_BOLD)
+                    center(f"You dealt {pturndmg} to the {enemyname}!")
+                    stdscr.addstr(3, cy, f"You dealt {pturndmg} damage to the {enemyname}!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
                 if enemyhealth <= 0:
                     box()
                     global pxp
                     pxp += enemyid*5
-                    stdscr.addstr(3, 38-len(f"You killed the {enemyname}! You get {enemyid*5} experience points.")//2, f"You killed the {enemyname}! You get {enemyid*5} experience points.", curses.color_pair(3) | curses.A_BOLD)
-                    stdscr.addstr(4, 38-len(f"You now have {pxp} experience points!")//2, f"You now have {pxp} experience points!", curses.color_pair(3) | curses.A_BOLD)
+                    center(f"You killed the {enemyname}! You get {enemyid*5} experience points.")
+                    stdscr.addstr(3, cy, f"You killed the {enemyname}! You get {enemyid*5} experience points.", curses.color_pair(3) | curses.A_BOLD)
+                    center(f"You now have {pxp} experience points!")
+                    stdscr.addstr(4, cy, f"You now have {pxp} experience points!", curses.color_pair(3) | curses.A_BOLD)
                     if earmor != 0:
-                        stdscr.addstr(5, 38-len(f"The {enemyname} was wearing a {earmorname}!")//2, f"The {enemyname} was wearing a {earmorname}!")
+                        center(f"The {enemyname} was wearing a {earmorname}!")
+                        stdscr.addstr(5, cy, f"The {enemyname} was wearing a {earmorname}!")
                         stdscr.getch()
                         menu("Pick up the armor?", curses.color_pair(1)|curses.A_BOLD, "Yes", "No")
                         if selection == 1:
@@ -494,7 +526,8 @@ def combat(location, difficulty):
                             global parmorname
                             parmorname = earmorname
                     elif eweapon != 0:
-                        stdscr.addstr(5, 38-len(f"The {enemyname} was carrying a {eweaponname}!")//2, f"The {enemyname} was carrying a {eweaponname}!")
+                        center(f"The {enemyname} was carrying a {eweaponname}!")
+                        stdscr.addstr(5, cy, f"The {enemyname} was carrying a {eweaponname}!")
                         stdscr.getch()
                         menu("Pick up the weapon?", curses.color_pair(1)|curses.A_BOLD, "Yes", "No")
                         if selection == 1:
@@ -503,7 +536,8 @@ def combat(location, difficulty):
                             pweaponname = eweaponname
                     elif coinloot != 0:
                         global pcoins
-                        stdscr.addstr(5, 38-len(f"The {enemyname} dropped {coinloot} coins!")//2, f"The {enemyname} dropped {coinloot} coins!")
+                        center(f"The {enemyname} dropped {coinloot} coins!")
+                        stdscr.addstr(5, cy, f"The {enemyname} dropped {coinloot} coins!")
                         pcoins += coinloot
                         stdscr.getch()
                     else:
@@ -515,7 +549,8 @@ def combat(location, difficulty):
                 displayhealth()
                 stdscr.refresh()
                 time.sleep(1)
-                stdscr.addstr(3, 38-len(f"{enemyname} is attacking!")//2, f"{enemyname} is attacking!", curses.color_pair(2) | curses.A_BOLD)
+                center(f"{enemyname} is attacking!")
+                stdscr.addstr(3, cy, f"{enemyname} is attacking!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
                 eturndmg = randint(0, enemydmg) + eweapon - parmor
@@ -526,10 +561,12 @@ def combat(location, difficulty):
                 box()
                 displayhealth()
                 if eturndmg == 0:
-                    stdscr.addstr(3, 38-len(f"The {enemyname} missed you!")//2, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
+                    center(f"The {enemyname} missed you!")
+                    stdscr.addstr(3, cy, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
                 else:
                     #playsound("./sounds/atk.wav", False)
-                    stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
+                    center(f"The {enemyname} dealt {eturndmg} damage to you!")
+                    stdscr.addstr(3, cy, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
                 if phealth <= 0:
@@ -537,7 +574,8 @@ def combat(location, difficulty):
             elif selection == 2:
                 box()
                 displayhealth()
-                stdscr.addstr(3, 38-len("You spend the turn resting...")//2, "You spend the turn resting.", curses.A_BOLD)
+                center("You spend the turn resting...")
+                stdscr.addstr(3, cy, "You spend the turn resting.", curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
                 recover = phealth // 4
@@ -546,14 +584,16 @@ def combat(location, difficulty):
                     phealth = pxp // 10
                 box()
                 displayhealth()
-                stdscr.addstr(3, 38-len(f"You recovered {recover} health!")//2, f"You recovered {recover} health!", curses.A_BOLD | curses.color_pair(3))
+                center(f"You recovered {recover} health!")
+                stdscr.addstr(3, cy, f"You recovered {recover} health!", curses.A_BOLD | curses.color_pair(3))
                 stdscr.refresh()
                 time.sleep(1)
                 box()
                 displayhealth()
                 stdscr.refresh()
                 time.sleep(1)
-                stdscr.addstr(3, 38-len(f"{enemyname} is attacking!")//2, f"{enemyname} is attacking!", curses.color_pair(2) | curses.A_BOLD)
+                center(f"{enemyname} is attacking!")
+                stdscr.addstr(3, cy, f"{enemyname} is attacking!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
                 eturndmg = randint(0, enemydmg) + eweapon - parmor
@@ -564,10 +604,12 @@ def combat(location, difficulty):
                 box()
                 displayhealth()
                 if eturndmg == 0:
-                    stdscr.addstr(3, 38-len(f"The {enemyname} missed you!")//2, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
+                    center(f"The {enemyname} missed you!")
+                    stdscr.addstr(3, cy, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
                 else:
                     #playsound("./sounds/atk.wav", False)
-                    stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
+                    center(f"The {enemyname} dealt {eturndmg} damage to you!")
+                    stdscr.addstr(3, cy, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
                 stdscr.refresh()
                 time.sleep(1)
                 if phealth <= 0:
@@ -576,13 +618,15 @@ def combat(location, difficulty):
                 gotaway = randint(0, 3)
                 if gotaway == 2 or gotaway == 3:
                     box()
-                    stdscr.addstr(3, 38-len("You got away!")//2, "You got away!", curses.A_BOLD)
+                    center("You got away!")
+                    stdscr.addstr(3, cy, "You got away!", curses.A_BOLD)
                     stdscr.refresh()
                     stdscr.getch()
                     loc(location, difficulty)
                 elif gotaway == 0 or 1:
                     box()
-                    stdscr.addstr(3, 38-len("You didn't get away!")//2, "You didn't get away!", curses.A_BOLD)
+                    center("You didn't get away!")
+                    stdscr.addstr(3, cy, "You didn't get away!", curses.A_BOLD)
                     stdscr.getch()
                     eturndmg = randint(0, enemydmg) + eweapon - parmor
                     if eturndmg < 0:
@@ -592,10 +636,12 @@ def combat(location, difficulty):
                     box()
                     displayhealth()
                     if eturndmg == 0:
-                        stdscr.addstr(3, 38-len(f"The {enemyname} missed you!")//2, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
+                        center(f"The {enemyname} missed you!")
+                        stdscr.addstr(3, cy, f"The {enemyname} missed you!", curses.color_pair(3) | curses.A_BOLD)
                     else:
                         #playsound("./sounds/atk.wav", False)
-                        stdscr.addstr(3, 38-len(f"The {enemyname} dealt {eturndmg} damage to you!")//2, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
+                        center(f"The {enemyname} dealt {eturndmg} damage to you!")
+                        stdscr.addstr(3, cy, f"The {enemyname} dealt {eturndmg} damage to you!", curses.color_pair(2) | curses.A_BOLD)
                     stdscr.refresh()
                     time.sleep(1)
                     if phealth <= 0:
@@ -631,66 +677,108 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
         if option3 == "":
             items = 2
             box()
-            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
-            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
-            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
+            center(title)
+            stdscr.addstr(3, cy, title, titleattr)
+            center(option1)
+            stdscr.addstr(5, cy, option1, attr1)
+            center(option2)
+            stdscr.addstr(7, cy, option2, attr2)
         elif option3 != "" and option4 == "":
             items = 3
             box()
-            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
-            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
-            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
-            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
+            center(title)
+            stdscr.addstr(3, cy, title, titleattr)
+            center(option1)
+            stdscr.addstr(5, cy, option1, attr1)
+            center(option2)
+            stdscr.addstr(7, cy, option2, attr2)
+            center(option3)
+            stdscr.addstr(9, cy, option3, attr3)
         elif option4 != "" and option5 == "":
             items = 4
             box()
-            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
-            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
-            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
-            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
-            stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
+            center(title)
+            stdscr.addstr(3, cy, title, titleattr)
+            center(option1)
+            stdscr.addstr(5, cy, option1, attr1)
+            center(option2)
+            stdscr.addstr(7, cy, option2, attr2)
+            center(option3)
+            stdscr.addstr(9, cy, option3, attr3)
+            center(option4)
+            stdscr.addstr(11, cy, option4, attr4)
         elif option5 != "" and option6 == "":
             items = 5
             box()
-            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
-            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
-            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
-            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
-            stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
-            stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
+            center(title)
+            stdscr.addstr(3, cy, title, titleattr)
+            center(option1)
+            stdscr.addstr(5, cy, option1, attr1)
+            center(option2)
+            stdscr.addstr(7, cy, option2, attr2)
+            center(option3)
+            stdscr.addstr(9, cy, option3, attr3)
+            center(option4)
+            stdscr.addstr(11, cy, option4, attr4)
+            center(option5)
+            stdscr.addstr(13, cy, option5, attr5)
         elif option6 != "" and option7 == "":
             items = 6
             box()
-            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
-            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
-            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
-            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
-            stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
-            stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
-            stdscr.addstr(15, 38-(len(option6)//2), option6, attr6)
+            center(title)
+            stdscr.addstr(3, cy, title, titleattr)
+            center(option1)
+            stdscr.addstr(5, cy, option1, attr1)
+            center(option2)
+            stdscr.addstr(7, cy, option2, attr2)
+            center(option3)
+            stdscr.addstr(9, cy, option3, attr3)
+            center(option4)
+            stdscr.addstr(11, cy, option4, attr4)
+            center(option5)
+            stdscr.addstr(13, cy, option5, attr5)
+            center(option6)
+            stdscr.addstr(15, cy, option6, attr6)
         elif option7 != "" and option8 == "":
             items = 7
             box()
-            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
-            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
-            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
-            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
-            stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
-            stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
-            stdscr.addstr(15, 38-(len(option6)//2), option6, attr6)
-            stdscr.addstr(17, 38-(len(option7)//2), option7, attr7)
+            center(title)
+            stdscr.addstr(3, cy, title, titleattr)
+            center(option1)
+            stdscr.addstr(5, cy, option1, attr1)
+            center(option2)
+            stdscr.addstr(7, cy, option2, attr2)
+            center(option3)
+            stdscr.addstr(9, cy, option3, attr3)
+            center(option4)
+            stdscr.addstr(11, cy, option4, attr4)
+            center(option5)
+            stdscr.addstr(13, cy, option5, attr5)
+            center(option6)
+            stdscr.addstr(15, cy, option6, attr6)
+            center(option7)
+            stdscr.addstr(17, cy, option7, attr7)
         elif option8 != "":
             items = 8
             box()
-            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
-            stdscr.addstr(5, 38-(len(option1)//2), option1, attr1)
-            stdscr.addstr(7, 38-(len(option2)//2), option2, attr2)
-            stdscr.addstr(9, 38-(len(option3)//2), option3, attr3)
-            stdscr.addstr(11, 38-(len(option4)//2), option4, attr4)
-            stdscr.addstr(13, 38-(len(option5)//2), option5, attr5)
-            stdscr.addstr(15, 38-(len(option6)//2), option6, attr6)
-            stdscr.addstr(17, 38-(len(option7)//2), option7, attr7)
-            stdscr.addstr(19, 38-(len(option8)//2), option8, attr8)
+            center(title)
+            stdscr.addstr(3, cy, title, titleattr)
+            center(option1)
+            stdscr.addstr(5, cy, option1, attr1)
+            center(option2)
+            stdscr.addstr(7, cy, option2, attr2)
+            center(option3)
+            stdscr.addstr(9, cy, option3, attr3)
+            center(option4)
+            stdscr.addstr(11, cy, option4, attr4)
+            center(option5)
+            stdscr.addstr(13, cy, option5, attr5)
+            center(option6)
+            stdscr.addstr(15, cy, option6, attr6)
+            center(option7)
+            stdscr.addstr(17, cy, option7, attr7)
+            center(option8)
+            stdscr.addstr(19, cy, option8, attr8)
         key = stdscr.getkey()
         if key == "KEY_UP":
             if selection == 1:
@@ -780,22 +868,29 @@ def menu(title, titleattr, option1, option2, option3="", option4="", option5="",
 def typetext(y, text, attr):
     for i in range(len(text)):
         #playsound("./sounds/click.wav", False)
-        stdscr.addch(y, 38-(len(text)//2)+i, text[i], attr)
+        center(text)
+        stdscr.addch(y, cy+i, text[i], attr)
         time.sleep(0.05)
         stdscr.refresh()
         stdscr.nodelay(True)
         skip = stdscr.getch()
         if skip == 32:
             stdscr.addstr(y, 1, "                                                                                ")
-            stdscr.addstr(y, 38-(len(text)//2), text, attr)
+            stdscr.addstr(y, cy, text, attr)
             stdscr.border()
             stdscr.refresh()
             stdscr.nodelay(False)
             break
     stdscr.nodelay(False)
+
 def box():
     stdscr.erase()
     stdscr.border()
+
+def center(text):
+    global cy
+    cy = 38-len(text)//2
+    return cy
 
 def gameover():
     time.sleep(1)
@@ -804,7 +899,8 @@ def gameover():
     time.sleep(1)
     #playsound("./sounds/death.wav", False)
     for i in range(len("GAME OVER")):
-        stdscr.addch(11, 38-(len("GAME OVER")//2)+i, "GAME OVER"[i], curses.color_pair(2) | curses.A_BOLD)
+        center("GAME OVER")
+        stdscr.addch(11, cy+i, "GAME OVER"[i], curses.color_pair(2) | curses.A_BOLD)
         time.sleep(0.10)
         stdscr.refresh()
     stdscr.getch()
