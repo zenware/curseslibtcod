@@ -1,7 +1,8 @@
 # Should this be inheritance based or interface based?
 # i.e. things that are true of characters or things that are... "fightable"
 
-from .items import Weapon, Armor, InvalidItemException
+from items import Weapon, Armor, InvalidItemException
+from abc import abstractmethod
 
 class Character:
     """This is our base-representation of a character...
@@ -16,8 +17,8 @@ class Character:
 
 
     @abstractmethod
-    def __init__(self, name, experience_points=200, armor=0, pd):
-        self.name = name
+    def __init__(self, *args, **kwargs):
+        pass
 
 
     def calculate_damage(self):
@@ -58,6 +59,9 @@ class Character:
 
 
 class NonPlayer(Character):
+    def __init__(self, name):
+        self.name = name
+        # TODO: This is mostly going to be for enemies at least temporarily
 
 class Player(Character):
     def __init__(self, name, experience_points=200, armor=None, weapon=Weapon.get_weapon("Toy Sword")):

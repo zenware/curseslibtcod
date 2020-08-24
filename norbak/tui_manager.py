@@ -57,7 +57,7 @@ class TUIManager:
             row_numbers = [3, 5, 7, 9, 11, 13, 15]
             self._screen.addstr(row_numbers[0], 38-len(menu_title)//2, menu_title, title_attribute)
             for idx, option in enumerate(menu_options):
-                self._screen.addstr(row_numbers[idx+1], 38-len(option)//2, option, option_attributes[idx]))
+                self._screen.addstr(row_numbers[idx+1], 38-len(option)//2, option, option_attributes[idx])
 
             def move_up():
                 if selected_option <= 0:
@@ -80,7 +80,7 @@ class TUIManager:
 
             pressed_key = self.getkey()
 
-            if pressed_key = " ":
+            if pressed_key == " ":
                 return selected_option  # Return the chose option.
 
             try:

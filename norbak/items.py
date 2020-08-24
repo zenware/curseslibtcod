@@ -13,7 +13,11 @@ class Weapon:
 
     @staticmethod
     def get_weapon(name):
-        """Generates a weapon based on a name"""
+        """Generates a weapon based on a name.
+        
+        TODO: Pull the data loader into some initialization thing
+        Make an Item Factory.
+        """
         with open("config.json") as f:
             game_config = json.load(f)
 

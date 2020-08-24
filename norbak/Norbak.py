@@ -10,8 +10,8 @@ from curses import wrapper
 from curses import textpad
 from curses.textpad import Textbox
 
-from .characters import Player, NonPlayer
-from .tui_manager import TUIManager
+from characters import Player, NonPlayer
+from tui_manager import TUIManager
 
 
 tui = TUIManager()  # This controls our Curses TUI
