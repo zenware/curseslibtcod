@@ -8,7 +8,7 @@ class TUIManager:
     def __getattr__(self, name):
         """If we don't have an attribute, pass through to the curses screen..."""
         try:
-            return self._screen.__getattr__(name)
+            return object.__getattribute__(self._screen, name)
         except:
             raise AttributeError("Neither TUIManager nor _CursesWindow has attribute %s" % name)
 
@@ -81,16 +81,13 @@ class TUIManager:
             pressed_key = self.getkey()
 
             if pressed_key == " ":
-                return selected_option  # Return the chose option.
+                return selected_option + 1  # Return the chosen option. as an int above 0
 
             try:
                 menu_movement[self.getkey()]()  # NOTE: This is currently very breakable but clever and I like it.
             except:
                 pass  # I don't actually care about this exception tbh
         
-
-
-
 
     def draw_enemy_stats(self, enemy):
         self._screen.addstr(3, 5, "Enemy:", curses.color_pair(2)|curses.A_BOLD)
