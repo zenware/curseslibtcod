@@ -10,19 +10,12 @@ from curses import wrapper
 from curses import textpad
 from curses.textpad import Textbox
 
-## Initialize curses and window
-stdscr = curses.initscr()
-curses.start_color()
-curses.noecho()
-curses.cbreak()
-stdscr.keypad(True)
-curses.curs_set(0)
-stdscr.resize(24, 80)
+from .characters import Player, NonPlayer
+from .tui_manager import TUIManager
 
-## Initialize color pairs
-curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
-curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
-curses.init_pair(3, curses.COLOR_GREEN, curses.COLOR_BLACK)
+
+tui = TUIManager()  # This controls our Curses TUI
+stdscr = curses.initscr()
 
 ## For menu().
 selection = 0
@@ -62,7 +55,6 @@ def playerinit():
     pcoins = 200
 
 def main(stdscr):
-    playerinit()
     #viewmap()
     intro()
     mainmenu()
@@ -122,11 +114,12 @@ def intro():
         stdscr.refresh()
 
 def mainmenu():
-    playerinit()
-    global selection
-    box()
-    menu("THE FIRES OF NORBAK", curses.color_pair(2) | curses.A_BOLD, "PLAY", "QUIT")
-    if selection == 1:
+    choice = tui.draw_menu(
+        menu_title="THE FIRES OF NORBAK",
+        title_attribute=curses.color_pair(2) | curses.A_BOLD,
+        menu_options=["PLAY", "QUIT"]
+    )
+    if choice == 1:
         ureg()
     else:
         end()
@@ -143,6 +136,17 @@ def ureg():
     pname = pname.decode('utf-8')
     if pname == "":
         ureg()
+
+    player = Player(
+        name=pname
+    )
+    pxp = 200
+    parmor = 0
+    pdmg = 0 + pxp // 100
+    phealth = 0 + pxp // 10
+    pweapon = 1
+    pname = 0
+
     #playsound("./confirm.wav", False)
     curses.noecho()
     curses.curs_set(0)
@@ -168,6 +172,8 @@ def ureg():
         box()
         typetext(3, "Oh, only the gods above can save us now!", curses.A_BOLD)
         gameover()
+
+    return player
 
 def start():
     box()
@@ -648,52 +654,38 @@ def combat(location, difficulty):
                         gameover()
             elif selection == 4:
                 box()
-                stdscr.addstr(3, 5, "Enemy:", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(4, 5, f"Health: {enemyhealth}", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(5, 5, f"Weapon: {eweaponname}", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(6, 5, f"Armor: {earmorname}", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(7, 5, f"Damage: {enemydmg+eweapon}", curses.color_pair(2)|curses.A_BOLD)
-                stdscr.addstr(3, 50, "You:", curses.color_pair(3)|curses.A_BOLD)
-                stdscr.addstr(4, 50, f"Health: {phealth}", curses.color_pair(3)|curses.A_BOLD)
-                stdscr.addstr(5, 50, f"Weapon: {pweaponname}", curses.color_pair(3)|curses.A_BOLD)
-                stdscr.addstr(6, 50, f"Armor: {parmorname}", curses.color_pair(3)|curses.A_BOLD)
-                stdscr.addstr(7, 50, f"Damage: {pdmg+pweapon}", curses.color_pair(3)|curses.A_BOLD)
-                stdscr.addstr(8, 50, f"Experience: {pxp}", curses.color_pair(3)|curses.A_BOLD)
-                stdscr.refresh()
-                stdscr.getch()
+                tui.draw_enemy_stats(current_enemy)
+                tui.draw_player_stats(player)
+                tui.update()
+                tui.getch()  # NOTE: This should passthrough to the _CursesWindow with __getattr__ override...
+
 
 def menu(title, titleattr, option1, option2, option3="", option4="", option5="", option6="", option7="", option8=""):
     global selection
     selection = 1
-    attr1 = curses.A_UNDERLINE
-    attr2 = 0
-    attr3 = 0
-    attr4 = 0
-    attr5 = 0
-    attr6 = 0
-    attr7 = 0
-    attr8 = 0
+    attrs = [
+        curses.A_UNDERLINE,
+        0,
+        0,
+        0,
+        0,
+        0
+    ]
+ 
     while True:
         if option3 == "":
             items = 2
             box()
-            center(title)
-            stdscr.addstr(3, cy, title, titleattr)
-            center(option1)
-            stdscr.addstr(5, cy, option1, attr1)
-            center(option2)
-            stdscr.addstr(7, cy, option2, attr2)
+            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
+            stdscr.addstr(5, 38-(len(option1)//2), option1, attr[0])
+            stdscr.addstr(7, 38-(len(option2)//2), option2, attr[1])
         elif option3 != "" and option4 == "":
             items = 3
             box()
-            center(title)
-            stdscr.addstr(3, cy, title, titleattr)
-            center(option1)
-            stdscr.addstr(5, cy, option1, attr1)
-            center(option2)
-            stdscr.addstr(7, cy, option2, attr2)
-            center(option3)
-            stdscr.addstr(9, cy, option3, attr3)
+            stdscr.addstr(3, 38-len(title)//2, title, titleattr)
+            stdscr.addstr(5, 38-(len(option1)//2), option1, attr[0])
+            stdscr.addstr(7, 38-(len(option2)//2), option2, attr[1])
+            stdscr.addstr(9, 38-(len(option3)//2), option3, attr[2])
         elif option4 != "" and option5 == "":
             items = 4
             box()

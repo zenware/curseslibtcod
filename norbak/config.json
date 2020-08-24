@@ -1,0 +1,60 @@
+{
+    "weapons": {
+        "Toy Sword": {
+            "damage": 1
+        },
+        "Small Dagger": {
+            "damage": 2
+        },
+        "Staff": {
+            "damage": 3
+        },
+        "Short Sword": {
+            "damage": 4
+        },
+        "Long Sword": {
+            "damage": 5
+        }
+    },
+
+    "armor": {
+        "Cloth Rags": {
+            "defense": 1
+        },
+        "Hardened Leather": {
+            "defense": 2
+        },
+        "Chain Mail": {
+            "defense": 3
+        },
+        "Metal Armor": {
+            "defense": 4
+        },
+        "Hardened Metal Armor": {
+            "defense": 5
+        }
+    },
+
+    "enemies": {
+        "Fungus": {
+            "damage": 2,
+            "health": 3,
+            "experience": 10
+        },
+        "Snail": {
+            "damage": 4,
+            "health": 5,
+            "experience": 15
+        },
+        "Insect": {
+            "damage": 6,
+            "health": 7,
+            "experience": 20
+        },
+        "Rat": {
+            "damage": 8,
+            "health": 9,
+            "experience": 25
+        }
+    }
+}
